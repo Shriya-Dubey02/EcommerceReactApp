@@ -19,3 +19,11 @@ export const addProduct=(product)=>{
     }).then(data=>data.json())
     .then(data=>data)
 }
+
+export const getProductsById=(id_link)=>{
+    return fetch(id_link)
+    .then(data=>data.json())
+    .then(data=>data)
+
+
+}

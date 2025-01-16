@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { addProduct } from '../../services/ProductService'
 
-function ProductForm() {
+// onAddProduct is a prop
+function ProductForm({onAddProduct}) {
   let[searchQuery,setSearchQuery]=useState("");
   const searchFunction=(e)=>{
     setSearchQuery(e.target.value);
@@ -11,6 +12,7 @@ function ProductForm() {
 // function to be called when form will be submitting
 
 const submitHandler=(e)=>{
+  e.preventDefault();
 
   addProduct({
     productId: e.target.productId.value,
@@ -18,7 +20,10 @@ const submitHandler=(e)=>{
     productDescription: e.target.productDescription.value,
     productPrice: e.target.productPrice.value
 
-  }).then(data=>data)
+  }).then(data=>{
+    onAddProduct();
+    return data;
+  })
 }
 
 

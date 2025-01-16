@@ -15,6 +15,13 @@ function Product() {
 
  },[])
 
+ // To referesh all product when you add product
+ const refreshProducts=()=>{
+  getProducts().then(data=>{
+    setProducts(data);
+  })
+ }
+
 
   return (
     <div>
@@ -23,7 +30,8 @@ function Product() {
   <div class="row">
     <div class="col">
       {/* Product Form: Start */}
-      <ProductForm/> 
+      <ProductForm onAddProduct={refreshProducts}/> 
+      {/* to add product without refreshing */}
 
       {/* Product Form: End */}
 
@@ -38,6 +46,7 @@ function Product() {
          productName={p.productName}
          productDescription={p.productDescription}
          productPrice={p.productPrice} // this is coming from the api
+         product_link={p._links.self.href}
          />
        )
       })}
