@@ -1,11 +1,14 @@
 import React from 'react'
+import { getProductsById } from '../../services/ProductService'
 
 
 // we will be creating props 
-function ProductItem({productName,productDescription,productPrice,product_link}) {
-
-  const onSelectUpdate=(link)=>{
-    console.log(link);
+function ProductItem({productName,productDescription,productPrice,product_link,onSelectProduct}) {
+// Updating product
+  const onSelectUpdate=async (link)=>{
+  //  console.log(link);
+  let product=await getProductsById(link);
+  onSelectProduct(product);
 
   }
 
