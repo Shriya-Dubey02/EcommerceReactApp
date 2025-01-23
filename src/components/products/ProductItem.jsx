@@ -39,10 +39,6 @@ const onSelectDelete=async (product_id_link)=>{
     </div>
   </div>
 
-
-
-
-
     </div>
   )
 }

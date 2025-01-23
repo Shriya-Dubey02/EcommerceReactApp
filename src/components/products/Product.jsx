@@ -3,17 +3,18 @@ import { getProducts, getProductsHighToLow, getProductsLowToHigh } from '../../s
 import ProductItem from './ProductItem'
 import ProductForm from './ProductForm'
 
-function Product() {
+function Product({queryFromNavbar}) {
  let[products,setProducts]= useState([])
  let[searchQuery,setSearchQuery]=useState("");
- let[repositories,setRepositories]=useState([]);
+ // let[repositories,setRepositories]=useState([]);
  let[selectedProduct,setSelectedProduct]=useState(null);
-
-
- const searchFunction=(e)=>{
-   setSearchQuery(e.target.value);
  
- }
+
+
+//  const searchFunction=(e)=>{
+//    setSearchQuery(e.target.value);
+ 
+//  }
 
 //  we are using this to mount products
  useEffect(()=>{
@@ -21,8 +22,14 @@ function Product() {
     setProducts(data);
   })
 
+  console.log("Data From navbar",queryFromNavbar)
+  if(queryFromNavbar)
+  {
+    setSearchQuery(queryFromNavbar);
+  }
 
- },[])
+
+ },[queryFromNavbar])
 
  // To referesh all product when you add product
  const refreshProducts=()=>{
@@ -73,7 +80,6 @@ const sort=async (choice)=>{
   <div className="row">
     <div className="col">
 
-    <input type="text" onChange={searchFunction} />
       {/* Product Form: Start */}
       <ProductForm onAddProduct={refreshProducts}  selectedProduct={selectedProduct} 
       setSelectedProduct={setSelectedProduct}/> 
@@ -102,14 +108,27 @@ const sort=async (choice)=>{
 </ul>
 
       {/* Sort end */}
+<hr />
+{/* Search */}
 
+<div class="mb-3">
+    
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" 
+    onChange={(e)=>{setSearchQuery(e.target.value)}}/>
+    <div id="emailHelp" class="form-text">Enter your search query here...</div>
+  </div>
+{/* =====================Search End============================ */}
 
        {/* Displaying Products : Start*/}
        <div className="row row-cols-1 row-cols-md-2 g-4">
 
       
       
-      {products.map((p)=>{
+      {products.filter(p=>{
+        return p.productName
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
+      }).map((p)=>{
 
          return(
          <ProductItem 
