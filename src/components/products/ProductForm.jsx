@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { addProduct, updateProduct } from '../../services/ProductService'
+import { addProduct, updateProduct, uploadProductImage } from '../../services/ProductService'
 
 // onAddProduct is a prop
 function ProductForm({onAddProduct,selectedProduct,setSelectedProduct}) {
@@ -15,8 +15,12 @@ const submitHandler=(e)=>{
     productName: e.target.productName.value,
     productDescription: e.target.productDescription.value,
     productPrice: e.target.productPrice.value
-
+// files upload
   }).then(data=>{
+    uploadProductImage(data._links.self.href,e.target.productImage.files[0])
+    .then(data=>data)
+// file upload
+
     onAddProduct();
     return data;
   })
@@ -103,8 +107,12 @@ const updateHandler=(e)=>{
     value={product.productPrice} onChange={handleChange}/>
   </div>
 
-
-
+{/* Product Image */}
+  <div className="mb-3">
+    <label for="exampleInputEmail1" className="form-label" >Product Image</label>
+    <input type="file" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="productImage"
+   onChange={handleChange}/>
+  </div>
 {/* Button to submit form */}
 
 {

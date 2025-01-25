@@ -74,3 +74,16 @@ export const orderByproductNameDesc=()=>{
 
 }
 
+// 25 Jan: Uploading image
+export const uploadProductImage=(product_link,file)=>{
+
+    let formData=new FormData();
+    formData.append("productImage",file);
+    return fetch(product_link+"/image",{
+        method:"POST",
+        body:formData
+    }).then(data=>data.text())
+    .then(data=>data)
+
+
+}
