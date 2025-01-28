@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { deleteProduct, getProductsById } from '../../services/ProductService'
-import { getCategories } from '../../services/CategoryService'
+import { getCategories, setCategorys } from '../../services/CategoryService'
 
 
 // we will be creating props 
@@ -20,7 +20,7 @@ function ProductItem({productName,productDescription,productPrice,product_link,o
 
   useEffect(()=>{
     getCategories().then(data=>{
-      setCategory(data)
+      setCategorys(data)
     })
   },[])
 
@@ -42,6 +42,13 @@ const onSelectDelete=async (product_id_link)=>{
 }
 
 // =========================================================
+// Function to set category
+const handleCategory=(category_link,product_link)=>{
+  setCategorys(product_link+"/category",category_link)
+
+}
+
+// ===========================================================
   return (
     <div>
        <div className="col">
@@ -67,8 +74,7 @@ const onSelectDelete=async (product_id_link)=>{
       
 
       return(
-        <li><button class="dropdown-item" type="button">Act</button></li>
-
+        <li><button class="dropdown-item" type="button" onClick={()=>{handleCategory(cat._links.self.href,product_link)}}>{cat.categoryName}</button></li>
       )
     })}
   </ul>

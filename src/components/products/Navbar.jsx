@@ -50,6 +50,7 @@ function Navbar({handleSearchQuery}) {
     </div>
   </div>
 </nav>
+
     </div>
   )
 }
